@@ -1,27 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import MovieCard from "./MovieCard";
-import Cookies from "js-cookie";
+import GameCard from "./GameCard";
 
 function App() {
-  const [movies, setMovies] = useState([]);
+  const API_KEY = "27fffb70989a4131a61a960c34e3cd46";
+  const API_URL = `https://api.rawg.io/api/games?key=${API_KEY}`;
+  const API_SEARCH = `https://api.rawg.io/api/games?key=${API_KEY}&search=`;
+
+  const [games, setGames] = useState([]);
   const [term, setTerm] = useState("");
 
   useEffect(() => {
-    fetch("/api/movies")
+    fetch(API_URL)
       .then((res) => res.json())
-      .then((data) => setMovies(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
-
-  useEffect(() => {
-    const storedSearchTerm = Cookies.get("searchTerm");
-    if (storedSearchTerm) {
-      fetch(`/api/movies/search?term=${encodeURIComponent(storedSearchTerm)}`)
-        .then((res) => res.json())
-        .then((data) => setMovies(data))
-        .catch((error) => console.error("Error:", error));
-    }
+      .then((data) => setGames(data.results));
   }, []);
 
   const handleSearch = (e) => {
@@ -29,48 +21,37 @@ function App() {
     if (term === "") {
       window.location.reload();
     } else {
-      fetch(`/api/movies/search?term=${encodeURIComponent(term)}`)
+      fetch(API_SEARCH + term)
         .then((res) => res.json())
         .then((data) => {
-          setMovies(data);
-          setTerm(""); // Clear the search bar
-        })
-        .catch((error) => console.error("Error:", error));
+          setGames(data.results);
+          setTerm("");
+        });
     }
-  };
-
-  const handleGenreClick = (genreId) => {
-    fetch(`/api/movies/genre/${genreId}`)
-      .then((res) => res.json())
-      .then((data) => setMovies(data))
-      .catch((error) => console.error("Error:", error));
   };
 
   return (
     <div className="App">
       <div className="search_nav">
         <div className="title">
-          <h1 onClick={() => window.location.reload()}>Movie Finder</h1>
+          <h1 onClick={() => window.location.reload()}>GameNest</h1>
         </div>
         <div className="search_box">
           <form onSubmit={handleSearch}>
-            <input onChange={(e) => setTerm(e.target.value)} />
-            <button>Search</button>
+            <input
+              type="text"
+              placeholder="Search for games"
+              value={term}
+              onChange={(e) => setTerm(e.target.value)}
+            />
+            <button type="submit">Search</button>
           </form>
-        </div>
-        <div className="genre_buttons">
-          <button onClick={() => handleGenreClick(27)}>Horror</button>
-          <button onClick={() => handleGenreClick(16)}>Animation</button>
-          <button onClick={() => handleGenreClick(28)}>Action</button>
-          <button onClick={() => handleGenreClick(10749)}>Romance</button>
-          <button onClick={() => handleGenreClick(12)}>Adventure</button>
-          <button onClick={() => handleGenreClick(35)}>Comedy</button>
         </div>
       </div>
 
-      <div className="movies">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} {...movie} />
+      <div className="games">
+        {games.map((game) => (
+          <GameCard key={game.id} {...game} />
         ))}
       </div>
     </div>

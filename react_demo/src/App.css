@@ -3,103 +3,87 @@
   margin: 0;
   font-family: sans-serif;
 }
+
+@keyframes waveAnimation {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 .App {
   padding: 1.5rem;
-  background-color: rgb(68, 0, 225);
+  background: linear-gradient(-45deg, #03bd2b, #000000, #03bd2b, #000000);
+  background-size: 400% 400%;
+  animation: waveAnimation 15s linear infinite;
 }
-.movies {
+
+
+.games {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  /* Optionally adjust the gap between cards */
+  gap: 1rem;
 }
 
 .search_nav {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-bottom: 1.5rem;
 }
-.title {
-  padding-right: 3rem;
-}
 
-.title h1{
-  color: white
-  
-}
-.title h1 :hover{
+.title h1 {
+  color: white;
   cursor: pointer;
 }
 
+.search_box {
+  display: flex;
+}
 
-.search_box input{
+.search_box input {
   border: 0;
-  outline:0;
+  outline: 0;
   margin-right: 0.2rem;
   padding: 0.3rem;
   border-radius: 1rem;
-  padding-left: 7rem; /* Increase padding */
-  padding-right: 7rem; /* Increase padding */
-  font-size: 1.2rem; /* Increase font size */
-  height: 2rem; /* Specify height */
+  padding-left: 7rem;
+  padding-right: 7rem;
+  font-size: 1.2rem;
+  height: 2rem;
 }
 
-.search_box button{
+.search_box button {
   border: 0;
-  outline:0;
+  outline: 0;
   background-color: white;
-  padding: .5rem;
-  padding-left: .8rem;
-  padding-right: .8rem;
+  padding: 0.5rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
   margin-left: 0.5rem;
   border-radius: 1rem;
+  cursor: pointer;
 }
+
 .search_box button:hover {
-  background-color: #333; /* Changes background color when hovered */
-  color: #f2f2f2; /* Changes text color when hovered */
+  background-color: #333;
+  color: #f2f2f2;
 }
+
 .search_box button:active {
-  background-color: #555; /* Changes background color when clicked */
+  background-color: #555;
 }
+
 .search_box button:focus {
-  outline: none; /* Removes focus outline */
+  outline: none;
 }
 
-.search_nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-
-.genre_buttons button {
-  background-color: #f2f2f2; /* Default background color */
-  color: #333; /* Default text color */
-  border: none; /* Removes default border */
-  padding: 10px 20px; /* Add padding */
-  cursor: pointer; /* Changes cursor to hand when hovering */
-  transition: background-color 0.3s ease; /* Smooth transition effect */
-  border-radius: 5px; /* Rounded corners */
-  margin: .3rem;
-}
-
-.genre_buttons button:hover {
-  background-color: #333; /* Changes background color when hovered */
-  color: #f2f2f2; /* Changes text color when hovered */
-}
-
-.genre_buttons button:active {
-  background-color: #555; /* Changes background color when clicked */
-}
-
-.genre_buttons button:focus {
-  outline: none; /* Removes focus outline */
-}
-
-
-
-/* Responsive styles */
 @media screen and (max-width: 768px) {
-  .movies {
+  .games {
     flex-direction: column;
     align-items: center;
   }
@@ -120,15 +104,11 @@
 
   .search_box input {
     width: 80%;
+    padding-left: 1rem; /* Adjust padding for smaller screens */
+    padding-right: 1rem; /* Adjust padding for smaller screens */
   }
 
   .search_box button {
     width: 15%;
-  }
-
-  .genre_buttons {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-right: 0;
   }
 }
