@@ -35,7 +35,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  background-color: rgb(33, 185, 241); /* Bright blue background */
+  background-color: rgb(7, 8, 9); /* Bright blue background */
   color: white; /* White text */
   padding: 0.5rem;
   display: flex; /* Use flexbox to center the content */

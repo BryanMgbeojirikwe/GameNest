@@ -15,9 +15,9 @@
 
 .App {
   padding: 1.5rem;
-  background: linear-gradient(-45deg, #03bd2b, #000000, #03bd2b, #000000);
+  background: linear-gradient(-45deg, #02c42c, #000000, #04801f, #000000);
   background-size: 400% 400%;
-  animation: waveAnimation 15s linear infinite;
+  animation: waveAnimation 10s linear infinite;
 }
 
 
@@ -111,4 +111,29 @@
   .search_box button {
     width: 15%;
   }
+}
+
+
+.genre_buttons {
+  display: flex; /* Align buttons in a row */
+  gap: 10px; /* Add some space between buttons */
+  margin-left: 20px; /* Add margin to the left of the buttons */
+}
+
+.genre_buttons button {
+  padding: 10px 15px; /* Add padding inside the buttons */
+  font-size: 1rem; /* Set the font size */
+  background-color: #333; /* Set a background color */
+  color: white; /* Set text color */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Round the corners */
+  cursor: pointer; /* Change cursor to pointer */
+  transition: background-color 0.3s, transform 0.1s; /* Transition for background color and transform */
+}
+
+.genre_buttons button:hover,
+.genre_buttons button:focus {
+  background-color: #555; /* Darken button on hover/focus */
+  outline: none; /* Remove focus outline */
+  transform: scale(1.05); /* Scale up button on hover/focus */
 }
