@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, Suspense } from 'react';
+import debounce from 'lodash.debounce'; // Ensure lodash.debounce is installed
 import './App.css';
-import GameCard from './GameCard';
-import GameModal from './GameModal';
+
+const GameCard = React.lazy(() => import('./GameCard'));
+const GameModal = React.lazy(() => import('./GameModal'));
 
 function App() {
   const API_KEY = '27fffb70989a4131a61a960c34e3cd46';
@@ -19,16 +21,18 @@ function App() {
       });
   }, []);
 
+  const debouncedSearch = useCallback(debounce((nextValue) => {
+    fetch(`${API_URL}&search=${nextValue}`)
+      .then(res => res.json())
+      .then(data => {
+        setGames(data.results);
+      });
+  }, 500), []);
+
   const handleSearch = (e) => {
     e.preventDefault();
-    if (term) {
-      fetch(`${API_URL}&search=${term}`)
-        .then(res => res.json())
-        .then(data => {
-          setGames(data.results);
-          setTerm('');
-        });
-    }
+    debouncedSearch(term);
+    setTerm('');
   };
 
   const onImageClick = (gameId) => {
@@ -45,7 +49,7 @@ function App() {
     fetch(gameDetailsUrl)
       .then(res => res.json())
       .then(data => {
-        setGameSummary(data.description_raw); // Use the raw description without HTML tags
+        setGameSummary(data.description_raw); 
       })
       .catch(error => console.error('Error fetching game details:', error));
 
@@ -94,17 +98,21 @@ function App() {
       </div>
 
       <div className="games">
-        {games.map((game) => (
-          <GameCard key={game.id} game={game} onImageClick={() => onImageClick(game.id)} />
-        ))}
+        <Suspense fallback={<div>Loading...</div>}>
+          {games.map(game => (
+            <GameCard key={game.id} game={game} onImageClick={() => onImageClick(game.id)} />
+          ))}
+        </Suspense>
       </div>
 
       {selectedGameScreenshots.length > 0 && (
-        <GameModal
-          screenshots={selectedGameScreenshots}
-          summary={gameSummary}
-          closeModal={closeModal}
-        />
+        <Suspense fallback={<div>Loading modal...</div>}>
+          <GameModal
+            screenshots={selectedGameScreenshots}
+            summary={gameSummary}
+            closeModal={closeModal}
+          />
+        </Suspense>
       )}
     </div>
   );

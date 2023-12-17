@@ -1,47 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './GameModal.css';
+
+// Function to remove HTML tags from summary (moved outside the component)
+const cleanSummary = (text) => {
+  return text && text.replace(/<\/?[^>]+(>|$)/g, "");
+};
 
 const GameModal = ({ screenshots, summary, closeModal }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Function to remove HTML tags from summary
-  const cleanSummary = (text) => {
-    return text.replace(/<\/?[^>]+(>|$)/g, "");
-  };
-
-  // Function to update the index and reset the animation
-  const updateIndex = (newIndex) => {
-    const screenshotElement = document.querySelector('.modal-screenshot');
-    screenshotElement.style.animation = 'none'; // Reset animation
-    setTimeout(() => { // Re-apply the animation
-      setCurrentImageIndex(newIndex);
-      screenshotElement.style.animation = '';
-    }, 10); // Timeout to allow animation reset
-  };
-
   const showPrevious = () => {
-    const newIndex = currentImageIndex > 0 ? currentImageIndex - 1 : 0;
-    updateIndex(newIndex);
+    setCurrentImageIndex(prevIndex => prevIndex > 0 ? prevIndex - 1 : 0);
   };
 
   const showNext = () => {
-    const newIndex = currentImageIndex < screenshots.length - 1 ? currentImageIndex + 1 : screenshots.length - 1;
-    updateIndex(newIndex);
+    setCurrentImageIndex(prevIndex => prevIndex < screenshots.length - 1 ? prevIndex + 1 : screenshots.length - 1);
   };
-
-  
 
   return (
     <div className="modal-overlay" onClick={closeModal}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="image-slider">
-          <button className="slide-btn left" onClick={showPrevious}>&lt;</button>
+          {currentImageIndex > 0 && (
+            <button className="slide-btn left" onClick={showPrevious}>&lt;</button>
+          )}
           <img
             src={screenshots[currentImageIndex].image}
             alt={`Screenshot ${currentImageIndex + 1}`}
             className="modal-screenshot"
+            loading="lazy" // Use lazy loading to improve performance
           />
-          <button className="slide-btn right" onClick={showNext}>&gt;</button>
+          {currentImageIndex < screenshots.length - 1 && (
+            <button className="slide-btn right" onClick={showNext}>&gt;</button>
+          )}
         </div>
         <p className="game-summary">{cleanSummary(summary)}</p>
       </div>

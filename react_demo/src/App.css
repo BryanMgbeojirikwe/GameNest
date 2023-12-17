@@ -4,28 +4,18 @@
   font-family: sans-serif;
 }
 
-@keyframes waveAnimation {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 .App {
   padding: 1.5rem;
   background: linear-gradient(-45deg, #02c42c, #000000, #04801f, #000000);
   background-size: 400% 400%;
-  animation: waveAnimation 10s linear infinite;
+  /* Consider simplifying or removing the animation if it impacts performance */
+  
 }
-
 
 .games {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /* Optionally adjust the gap between cards */
   gap: 1rem;
 }
 
@@ -51,37 +41,27 @@
   margin-right: 0.2rem;
   padding: 0.3rem;
   border-radius: 1rem;
-  padding-left: 7rem;
-  padding-right: 7rem;
   font-size: 1.2rem;
   height: 2rem;
+  /* Simplify padding adjustments */
 }
 
 .search_box button {
   border: 0;
-  outline: 0;
   background-color: white;
   padding: 0.5rem;
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
-  margin-left: 0.5rem;
   border-radius: 1rem;
   cursor: pointer;
+  /* Transition effect simplified */
 }
 
+/* Consider simplifying hover effects */
 .search_box button:hover {
   background-color: #333;
   color: #f2f2f2;
 }
 
-.search_box button:active {
-  background-color: #555;
-}
-
-.search_box button:focus {
-  outline: none;
-}
-
+/* Media Queries for Responsive Design */
 @media screen and (max-width: 768px) {
   .games {
     flex-direction: column;
@@ -93,10 +73,6 @@
     align-items: flex-start;
   }
 
-  .title {
-    padding-right: 0;
-  }
-
   .search_box {
     width: 100%;
     margin-top: 1rem;
@@ -104,8 +80,6 @@
 
   .search_box input {
     width: 80%;
-    padding-left: 1rem; /* Adjust padding for smaller screens */
-    padding-right: 1rem; /* Adjust padding for smaller screens */
   }
 
   .search_box button {
@@ -113,27 +87,22 @@
   }
 }
 
-
 .genre_buttons {
-  display: flex; /* Align buttons in a row */
-  gap: 10px; /* Add some space between buttons */
-  margin-left: 20px; /* Add margin to the left of the buttons */
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
 }
 
 .genre_buttons button {
-  padding: 10px 15px; /* Add padding inside the buttons */
-  font-size: 1rem; /* Set the font size */
-  background-color: #333; /* Set a background color */
-  color: white; /* Set text color */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Round the corners */
-  cursor: pointer; /* Change cursor to pointer */
-  transition: background-color 0.3s, transform 0.1s; /* Transition for background color and transform */
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.genre_buttons button:hover,
-.genre_buttons button:focus {
-  background-color: #555; /* Darken button on hover/focus */
-  outline: none; /* Remove focus outline */
-  transform: scale(1.05); /* Scale up button on hover/focus */
+.genre_buttons button:hover {
+  background-color: #555;
 }
